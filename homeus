@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birth Certificate Maker</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+  color: #222;
+}
+header {
+  background: #087f5b;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+.container {
+  max-width: 750px;
+  margin: 25px auto;
+  padding: 24px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 14px #0001;
+}
+h2 { color: #087f5b; }
+label {
+  display: block;
+  margin: 14px 0 6px;
+  font-weight: bold;
+}
+input, select {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+button {
+  padding: 12px 18px;
+  margin-top: 20px;
+  border: 0;
+  border-radius: 5px;
+  background: #087f5b;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+button:hover { background: #066747; }
+#preview {
+  display: none;
+  margin-top: 25px;
+  border: 1px solid #aaa;
+  padding: 20px;
+  line-height: 1.8;
+}
+@media print {
+  header, form, .actions { display: none; }
+  #preview { display: block !important; }
+  body { background: white; }
+  .container { box-shadow: none; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Birth Certificate Maker</h1>
+  <p>জন্ম তথ্য ফর্ম — ডেমো</p>
+</header>
+
+<div class="container">
+  <h2>জন্মের তথ্য দিন</h2>
+
+  <form id="birthForm">
+    <label for="name">নাম (বাংলা)</label>
+    <input id="name" required placeholder="সম্পূর্ণ নাম">
+
+    <label for="englishName">Name (English)</label>
+    <input id="englishName" required placeholder="Full name">
+
+    <label for="dob">জন্ম তারিখ</label>
+    <input id="dob" type="date" required>
+
+    <label for="gender">লিঙ্গ</label>
+    <select id="gender" required>
+      <option value="">নির্বাচন করুন</option>
+      <option>পুরুষ</option>
+      <option>নারী</option>
+      <option>অন্যান্য</option>
+    </select>
+
+    <label for="father">পিতার নাম</label>
+    <input id="father" required>
+
+    <label for="mother">মাতার নাম</label>
+    <input id="mother" required>
+
+    <label for="place">জন্মস্থান</label>
+    <input id="place" required>
+
+    <label for="address">বর্তমান ঠিকানা</label>
+    <input id="address" required>
+
+    <button type="submit">প্রিভিউ দেখুন</button>
+  </form>
+
+  <div id="preview">
+    <h2 style="text-align:center">জন্ম তথ্যের প্রিভিউ</h2>
+    <p><b>নাম:</b> <span id="pName"></span></p>
+    <p><b>Name:</b> <span id="pEnglishName"></span></p>
+    <p><b>জন্ম তারিখ:</b> <span id="pDob"></span></p>
+    <p><b>লিঙ্গ:</b> <span id="pGender"></span></p>
+    <p><b>পিতার নাম:</b> <span id="pFather"></span></p>
+    <p><b>মাতার নাম:</b> <span id="pMother"></span></p>
+    <p><b>জন্মস্থান:</b> <span id="pPlace"></span></p>
+    <p><b>ঠিকানা:</b> <span id="pAddress"></span></p>
+    <p style="color:#b42318">
+      ডেমো কপি — এটি সরকারি জন্ম নিবন্ধন সনদ নয়।
+    </p>
+    <div class="actions">
+      <button onclick="window.print()">প্রিন্ট / PDF</button>
+      <button onclick="location.reload()">নতুন ফর্ম</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById("birthForm").addEventListener(
+  "submit", function(event) {
+    event.preventDefault();
+
+    const fields = [
+      ["name", "pName"],
+      ["englishName", "pEnglishName"],
+      ["dob", "pDob"],
+      ["gender", "pGender"],
+      ["father", "pFather"],
+      ["mother", "pMother"],
+      ["place", "pPlace"],
+      ["address", "pAddress"]
+    ];
+
+    fields.forEach(([source, target]) => {
+      document.getElementById(target).textContent =
+        document.getElementById(source).value;
+    });
+
+    document.getElementById("preview").style.display = "block";
+    document.getElementById("preview").scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+);
+</script>
+
+</body>
+</html>
